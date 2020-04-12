@@ -38,7 +38,9 @@
     path: "{{ backup_file }}"
     format: zip
     remove: yes
-  when: create_backup_file
+  when:
+    - backup_file is defined
+    - create_backup_file
   register: compress_backup_file
 
 - name: 移除舊的備份檔案
