@@ -1,0 +1,10 @@
+---
+backup_directory: "/path/to/directory"
+backup_file: "/path/to/file"
+
+minio_client: "https://dl.min.io/client/mc/release/linux-amd64/mc"
+minio_url: "https://minio.entrypoint/"
+minio_name: "minio"
+minio_access_key: "minio-key"
+minio_access_secret: "minio-secret"
+minio_bucket: "minio/bucket/name"
