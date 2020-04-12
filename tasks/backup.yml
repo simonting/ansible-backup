@@ -10,7 +10,7 @@
     path: "{{ backup_directory }}"
     state: directory
     recurse: yes
-  when: backup_directory
+  when: backup_directory != ""
   register: create_backup_directory
 
 - name: 產出備份目標
