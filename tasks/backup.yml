@@ -3,6 +3,7 @@
 - set_fact:
     target_file: "{{ backup_target | basename }}"
     backup_file: "{{ backup_directory }}/{{ '%Y-%m-%d_%H%M%S' | strftime(ansible_date_time.epoch) }}.{{ target_file }}"
+  when: backup_target != ""
 
 - name: 建立備份目錄
   file:
