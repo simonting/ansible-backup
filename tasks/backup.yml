@@ -12,6 +12,16 @@
   when: backup_directory
   register: create_backup_directory
 
+- name: 產出備份目標
+  shell:
+    cmd: "{{ export_command }}"
+  when: export_command != ""
+  register: export_backup_target
+  tags:
+    - custom
+    - export
+    - command
+
 - name: 建立備份檔案
   copy:
     src: "{{ backup_target }}"

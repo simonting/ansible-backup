@@ -3,6 +3,8 @@ backup_directory: "/path/to/directory"
 backup_target: "/path/to/file"
 rotate_days: 7
 
+export_command: ""
+
 minio_client: "https://dl.min.io/client/mc/release/linux-amd64/mc"
 minio_url: "https://minio.entrypoint/"
 minio_name: "minio"
