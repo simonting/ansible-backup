@@ -1,0 +1,36 @@
+---
+
+- set_fact:
+    target_file: "{{ backup_target | basename }}"
+    backup_file: "{{ backup_directory }}/{{ '%Y-%m-%d_%H%M%S' | strftime(ansible_date_time.epoch) }}.{{ target_file }}"
+
+- name: 建立備份目錄
+  file:
+    path: "{{ backup_directory }}"
+    state: directory
+    recurse: yes
+  when: backup_directory
+  register: create_backup_directory
+
+- name: 建立備份檔案
+  copy:
+    src: "{{ backup_target }}"
+    dest: "{{ backup_file }}"
+    remote_src: yes
+  when:
+    - backup_target != ""
+    - create_backup_directory
+  register: create_backup_file
+
+- name: 壓縮備份檔案
+  archive:
+    path: "{{ backup_file }}"
+    format: zip
+    remove: yes
+  when: create_backup_file
+  register: compress_backup_file
+
+- name: 移除舊的備份檔案
+  shell:
+    cmd: find "{{ backup_directory }}" -type f -name '*.zip' -mtime +"{{ rotate_days }}" -exec rm -f {} \;
+  when: create_backup_directory
