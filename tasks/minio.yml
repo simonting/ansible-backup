@@ -14,13 +14,10 @@
 
 - name: 設定 Minio 連線
   shell: "mc config host add {{ minio_name | default('backup') }} {{ minio_url }} {{ minio_access_key }} {{ minio_access_secret }} --api S3v4"
-  when: mc_exists.rc != 0
-  register: mc_config_host
 
 - name: 檢查 Minio Bucket 是否存在
   shell: "mc stat {{ minio_name | default('backup') }}/{{ minio_bucket }}"
   ignore_errors: yes
-  when: mc_config_host
   register: mc_bucket_exists
 
 - name: 建立 Minio Bucket
